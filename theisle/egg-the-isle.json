@@ -1,0 +1,42 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-08-01T20:42:12+02:00",
+    "name": "TheIsle",
+    "author": "admin@endelon-hosting.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "quay.io\/parkervcp\/pterodactyl-images:ubuntu_source": "quay.io\/parkervcp\/pterodactyl-images:ubuntu_source"
+    },
+    "file_denylist": [],
+    "startup": "\/home\/container\/TheIsleServer.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# steamcmd Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n# Image to install with is 'debian:buster-slim'\r\napt -y update\r\napt -y --no-install-recommends install curl lib32gcc1 ca-certificates wget\r\n\r\necho -e \"Using anonymous user.\\n\"\r\nSTEAM_USER=anonymous\r\nSTEAM_PASS=\"\"\r\nSTEAM_AUTH=\"\"\r\n\r\n## download and install steamcmd\r\ncd \/tmp\r\nmkdir -p \/mnt\/server\/steamcmd\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \/mnt\/server\/steamcmd\r\ncd \/mnt\/server\/steamcmd\r\n\r\n# SteamCMD fails otherwise for some reason, even running as root.\r\n# This is changed at the end of the install process anyways.\r\nchown -R root:root \/mnt\r\nexport HOME=\/mnt\/server\r\n\r\n## install game using steamcmd\r\n.\/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +force_install_dir \/mnt\/server +app_update ${SRCDS_APPID} -beta evrima validate +quit ## other flags may be needed depending on install. looking at you cs 1.6\r\n\r\n## set up 32 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk32\r\ncp -v linux32\/steamclient.so ..\/.steam\/sdk32\/steamclient.so\r\n\r\n## set up 64 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk64\r\ncp -v linux64\/steamclient.so ..\/.steam\/sdk64\/steamclient.so\r\n\r\nmkdir -p $HOME\/.config\r\n\r\nmkdir $HOME\/TheIsle\/Saved\r\nmkdir $HOME\/TheIsle\/Saved\/Config\r\nmkdir $HOME\/TheIsle\/Saved\/Config\/LinuxServer\r\n\r\nwget https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/theisle\/Game.ini -O $HOME\/TheIsle\/Saved\/Config\/LinuxServer\/Game.ini\r\nwget https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/theisle\/Engine.ini -O $HOME\/TheIsle\/Saved\/Config\/LinuxServer\/Engine.ini\r\nwget https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/theisle\/TheIsleServer.sh -O $HOME\/TheIsleServer.sh\r\n\r\necho -e \"\/Game\/TheIsle\/Maps\/TitleMap?Port=${SERVER_PORT}?QueryPort=3333?MaxPlayers=20? -log\" >> $HOME\/TheIsleServer.sh\r\n\r\n\r\necho -e \"Install complete\"",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "SRCDS_APPID",
+            "description": "Steam app id",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "412680",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        }
+    ]
+}
