@@ -8,3 +8,4 @@ UE_TRUE_SCRIPT_NAME=$(echo \"$0\" | xargs readlink -f)
 UE_PROJECT_ROOT=$(dirname "$UE_TRUE_SCRIPT_NAME")
 chmod +x "$UE_PROJECT_ROOT/PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"
 "$UE_PROJECT_ROOT/PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping" PathOfTitans -log -Port=$SERVER_PORT -BranchKey=$BETA_BRANCH -AuthToken=$AG_AUTH_TOKEN -ServerGUID=$SERVER_GUID -Database=Local
+# For getting the server list to work you need to add -ServerListIP=000.000.000 option
