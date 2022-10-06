@@ -1,0 +1,62 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-10-06T14:06:00+02:00",
+    "name": "PathOfTitans",
+    "author": "admin@endelon-hosting.de",
+    "description": "Path Of Titans Egg by Marcel Baumgartner\r\nendelon-hosting.de",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/parkervcp\/yolks:ubuntu": "ghcr.io\/parkervcp\/yolks:ubuntu"
+    },
+    "file_denylist": [],
+    "startup": "\/bin\/bash \/home\/container\/startup.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#! \/bin\/bash\r\necho \"Path Of Titans Egg by Marcel Baumgartner\"\r\necho \"(c) Copyright 2022 - endelon-hosting.de\"\r\ncd \/mnt\/server\r\necho \"Installing utils\"\r\napt update\r\napt install -y wget\r\necho \"Downloading AlderonGamesCmd\"\r\nwget -O AlderonGamesCmd https:\/\/launcher-cdn.alderongames.com\/AlderonGamesCmd-Linux-x64\r\necho \"Download complete. Marking as executeable\"\r\nchmod +x AlderonGamesCmd\r\necho \"Updating files\"\r\nexport DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1\r\n.\/AlderonGamesCmd --game path-of-titans --server true --beta-branch $BETA_BRANCH --install-dir .\r\necho \"Creating folder for config files because this game is a weird one\"\r\nmkdir -p \/mnt\/server\/PathOfTitans\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Saved\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Config\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Config\/LinuxServer\r\necho \"Downloading startup script and default config files from Github\"\r\nwget -O \/mnt\/server\/PathOfTitans\/Config\/LinuxServer\/Game.ini https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/Game.ini\r\nwget -O \/mnt\/server\/startup.sh https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/startup.sh\r\necho \"Install finished\"",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Beta Branch",
+            "description": "The branch to use for this instance",
+            "env_variable": "BETA_BRANCH",
+            "default_value": "production",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Auth Token",
+            "description": "The AlderonGames Auth Token\r\nGo to https:\/\/alderongames.com\/oauth\/hosting-token to generate one",
+            "env_variable": "AG_AUTH_TOKEN",
+            "default_value": "none",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:99999",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Guid",
+            "description": "A GUIDv4 you can generate yourselft",
+            "env_variable": "SERVER_GUID",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        }
+    ]
+}
