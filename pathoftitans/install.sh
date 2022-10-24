@@ -15,9 +15,9 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 echo "Creating folder for config files because this game is a weird one"
 mkdir -p /mnt/server/PathOfTitans
 mkdir -p /mnt/server/PathOfTitans/Saved
-mkdir -p /mnt/server/PathOfTitans/Config
-mkdir -p /mnt/server/PathOfTitans/Config/LinuxServer
+mkdir -p /mnt/server/PathOfTitans/Saved/Config
+mkdir -p /mnt/server/PathOfTitans/Saved/Config/LinuxServer
 echo "Downloading startup script and default config files from Github"
-wget -O /mnt/server/PathOfTitans/Config/LinuxServer/Game.ini https://raw.githubusercontent.com/Endelon-Hosting/eggs/main/pathoftitans/Game.ini
+wget -O /mnt/server/PathOfTitans/Saved/Config/LinuxServer/Game.ini https://raw.githubusercontent.com/Endelon-Hosting/eggs/main/pathoftitans/Game.ini
 wget -O /mnt/server/startup.sh https://raw.githubusercontent.com/Endelon-Hosting/eggs/main/pathoftitans/startup.sh
 echo "Install finished"

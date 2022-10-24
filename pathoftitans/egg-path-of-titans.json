@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-10-06T14:06:00+02:00",
+    "exported_at": "2022-10-24T17:58:11+02:00",
     "name": "PathOfTitans",
     "author": "admin@endelon-hosting.de",
     "description": "Path Of Titans Egg by Marcel Baumgartner\r\nendelon-hosting.de",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#! \/bin\/bash\r\necho \"Path Of Titans Egg by Marcel Baumgartner\"\r\necho \"(c) Copyright 2022 - endelon-hosting.de\"\r\ncd \/mnt\/server\r\necho \"Installing utils\"\r\napt update\r\napt install -y wget\r\necho \"Downloading AlderonGamesCmd\"\r\nwget -O AlderonGamesCmd https:\/\/launcher-cdn.alderongames.com\/AlderonGamesCmd-Linux-x64\r\necho \"Download complete. Marking as executeable\"\r\nchmod +x AlderonGamesCmd\r\necho \"Updating files\"\r\nexport DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1\r\n.\/AlderonGamesCmd --game path-of-titans --server true --beta-branch $BETA_BRANCH --install-dir .\r\necho \"Creating folder for config files because this game is a weird one\"\r\nmkdir -p \/mnt\/server\/PathOfTitans\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Saved\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Config\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Config\/LinuxServer\r\necho \"Downloading startup script and default config files from Github\"\r\nwget -O \/mnt\/server\/PathOfTitans\/Config\/LinuxServer\/Game.ini https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/Game.ini\r\nwget -O \/mnt\/server\/startup.sh https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/startup.sh\r\necho \"Install finished\"",
+            "script": "#! \/bin\/bash\r\necho \"Path Of Titans Egg by Marcel Baumgartner\"\r\necho \"(c) Copyright 2022 - endelon-hosting.de\"\r\ncd \/mnt\/server\r\necho \"Installing utils\"\r\napt update\r\napt install -y wget\r\necho \"Downloading AlderonGamesCmd\"\r\nwget -O AlderonGamesCmd https:\/\/launcher-cdn.alderongames.com\/AlderonGamesCmd-Linux-x64\r\necho \"Download complete. Marking as executeable\"\r\nchmod +x AlderonGamesCmd\r\necho \"Updating files\"\r\nexport DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1\r\n.\/AlderonGamesCmd --game path-of-titans --server true --auth-token $AG_AUTH_TOKEN --beta-branch $BETA_BRANCH --install-dir .\r\necho \"Creating folder for config files because this game is a weird one\"\r\nmkdir -p \/mnt\/server\/PathOfTitans\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Saved\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Saved\/Config\r\nmkdir -p \/mnt\/server\/PathOfTitans\/Saved\/Config\/LinuxServer\r\necho \"Downloading startup script and default config files from Github\"\r\nwget -O \/mnt\/server\/PathOfTitans\/Saved\/Config\/LinuxServer\/Game.ini https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/Game.ini\r\nwget -O \/mnt\/server\/startup.sh https:\/\/raw.githubusercontent.com\/Endelon-Hosting\/eggs\/main\/pathoftitans\/startup.sh\r\necho \"Install finished\"",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
@@ -50,7 +50,7 @@
         },
         {
             "name": "Server Guid",
-            "description": "A GUIDv4 you can generate yourselft",
+            "description": "A GUIDv4\r\nhttps:\/\/duckduckgo.com\/?q=random+guid&atb=v296-1&ia=answer",
             "env_variable": "SERVER_GUID",
             "default_value": "",
             "user_viewable": false,
